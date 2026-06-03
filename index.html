@@ -47,7 +47,7 @@ button{
     <h2>Level 1</h2>
     <p>⚖️ Berat sekarang: 37 kg</p>
     <p>🎯 Target: 45 kg</p>
-    <p>✨ XP: 0 / 100</p>
+    <p>✨ XP: <span id="xp">0</span> / 100</p>
 </div>
 
 <div class="card">
@@ -93,6 +93,32 @@ button{
     <p>🔒 First 1 Kg</p>
     <p>🔒 Smoke Reducer</p>
 </div>
+<script>
 
+let xp = localStorage.getItem("xp") || 0;
+
+document.getElementById("xp").innerText = xp;
+
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+checkboxes.forEach(box => {
+
+    box.addEventListener("change", () => {
+
+        if(box.checked){
+            xp = parseInt(xp) + 10;
+        } else {
+            xp = parseInt(xp) - 10;
+        }
+
+        localStorage.setItem("xp", xp);
+
+        document.getElementById("xp").innerText = xp;
+
+    });
+
+});
+
+</script>
 </body>
 </html>
