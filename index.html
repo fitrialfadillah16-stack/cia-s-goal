@@ -44,10 +44,19 @@ button{
 <h1>💗 Cia's Goal</h1>
 
 <div class="card">
-    <h2>Level 1</h2>
+    <h2>Level <span id="level">1</span></h2>
     <p>⚖️ Berat sekarang: 37 kg</p>
     <p>🎯 Target: 45 kg</p>
     <p>✨ XP: <span id="xp">0</span> / 100</p>
+
+<div style="background:#ffd6e5;border-radius:20px;height:20px;">
+    <div id="xpBar"
+         style="background:#ff6fa5;
+         height:20px;
+         width:0%;
+         border-radius:20px;">
+    </div>
+</div>
 </div>
 
 <div class="card">
@@ -95,10 +104,11 @@ button{
 </div>
 <script>
 
-let xp = localStorage.getItem("xp") || 0;
+let xp = localStorage.getItem("xp") || 0;let level = Math.floor(xp / 100) + 1;
 
-document.getElementById("xp").innerText = xp;
-
+document.getElementById("xp").innerText = xp;document.getElementById("level").innerText = level;
+document.getElementById("xpBar").style.width =
+Math.min((xp / 100) * 100, 100) + "%";
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
 checkboxes.forEach(box => {
@@ -113,8 +123,11 @@ checkboxes.forEach(box => {
 
         localStorage.setItem("xp", xp);
 
-        document.getElementById("xp").innerText = xp;
+        document.getElementById("xp").innerText = xp;level = Math.floor(xp / 100) + 1;
 
+document.getElementById("level").innerText = level;
+document.getElementById("xpBar").style.width =
+Math.min((xp / 100) * 100, 100) + "%";
     });
 
 });
