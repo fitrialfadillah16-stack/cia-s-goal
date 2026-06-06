@@ -115,42 +115,8 @@ Progress:
 <br><br>
     <h2>📋 Daily Quest</h2>
 
- <div class="quest">
-    <h3>📅 Hari 1</h3>
+ <div class="quest" id="questContainer">
 
-    <p><b>🍳 08.00 Sarapan</b></p>
-    <input type="checkbox"> Nasi Putih 1 Porsi<br>
-    <input type="checkbox"> Telur Dadar 2 Butir<br>
-    <input type="checkbox"> Susu Full Cream 250ml<br><br>
-
-    <p><b>🍞 11.00 Snack Pagi</b></p>
-    <input type="checkbox"> Roti Coklat 2 Lembar<br><br>
-
-    <p><b>🍗 13.00 Makan Siang</b></p>
-    <input type="checkbox"> Nasi Ayam Geprek<br>
-    <input type="checkbox"> Tempe 2 Potong<br><br>
-
-    <p><b>🍌 16.00 Snack Sore</b></p>
-    <input type="checkbox"> Pisang 2 Buah<br>
-    <input type="checkbox"> Susu UHT<br><br>
-
-    <p><b>💪 18.30 Workout</b></p>
-    <input type="checkbox"> Squat x10<br>
-    <input type="checkbox"> Wall Push Up x10<br>
-    <input type="checkbox"> Glute Bridge x10<br>
-    <input type="checkbox"> Calf Raise x15<br>
-    <input type="checkbox"> Plank 15 Detik<br><br>
-
-    <p><b>🌙 19.30 Makan Malam</b></p>
-    <input type="checkbox"> Nasi Putih<br>
-    <input type="checkbox"> Telur Ceplok 2 Butir<br>
-    <input type="checkbox"> Tempe<br><br>
-
-    <p><b>🥛 22.00 Sebelum Tidur</b></p>
-    <input type="checkbox"> Susu Full Cream<br><br>
-
-    <p><b>🚬 Target Rokok</b></p>
-    <input type="checkbox"> Tidak Lebih Dari 15 Batang Hari Ini
 </div>
 </div>
 
@@ -303,6 +269,68 @@ function resetProgress(){
     location.reload();
 
 }
+    const days = {
+
+1: `
+<h3>📅 Hari 1</h3>
+
+<p><b>🍳 08.00 Sarapan</b></p>
+
+<input type="checkbox"> Nasi Putih<br>
+<input type="checkbox"> Telur Dadar 2 Butir<br>
+<input type="checkbox"> Susu Full Cream<br><br>
+
+<p><b>💪 18.30 Workout</b></p>
+
+<input type="checkbox"> Squat x10<br>
+<input type="checkbox"> Wall Push Up x10<br>
+<input type="checkbox"> Plank 15 Detik<br><br>
+
+<p><b>🚬 Target</b></p>
+
+<input type="checkbox"> Maks 15 Batang
+`,
+
+2: `
+<h3>📅 Hari 2</h3>
+
+<p><b>🍳 08.00 Sarapan</b></p>
+
+<input type="checkbox"> Nasi Uduk<br>
+<input type="checkbox"> Telur Rebus 2<br>
+<input type="checkbox"> Susu Full Cream<br><br>
+
+<p><b>💪 18.30 Workout</b></p>
+
+<input type="checkbox"> Squat x10<br>
+<input type="checkbox"> Wall Push Up x10<br>
+<input type="checkbox"> Plank 15 Detik<br><br>
+
+<p><b>🚬 Target</b></p>
+
+<input type="checkbox"> Maks 15 Batang
+`,
+
+3: `
+<h3>📅 Hari 3</h3>
+
+<p><b>🍳 08.00 Sarapan</b></p>
+
+<input type="checkbox"> Bubur Ayam<br>
+<input type="checkbox"> Telur Rebus<br>
+<input type="checkbox"> Susu Full Cream<br><br>
+
+<p><b>💪 18.30 Workout</b></p>
+
+<input type="checkbox"> Squat x10<br>
+<input type="checkbox"> Wall Push Up x10<br>
+<input type="checkbox"> Plank 15 Detik<br><br>
+
+<p><b>🚬 Target</b></p>
+
+<input type="checkbox"> Maks 14 Batang
+`
+};
     function nextDay(){
 
     if(currentDay < 30){
@@ -320,6 +348,10 @@ function resetProgress(){
         "📅 Day " +
         currentDay +
         " of 30";
+        document.getElementById(
+"questContainer"
+).innerHTML =
+days[currentDay];
 
     }
 
@@ -342,6 +374,10 @@ function prevDay(){
         "📅 Day " +
         currentDay +
         " of 30";
+        document.getElementById(
+"questContainer"
+).innerHTML =
+days[currentDay];
 
     }
 
