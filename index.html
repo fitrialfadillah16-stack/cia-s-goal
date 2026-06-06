@@ -73,24 +73,28 @@ Simpan
 </button>
 
 <p>
-Berat saat ini:
+⚖️ Berat Awal:
+37 kg
+</p>
+
+<p>
+⚖️ Berat Saat Ini:
 <span id="currentWeight">
 37
 </span> kg
 </p>
 
 <p>
-Target:
+🎯 Target:
 45 kg
 </p>
 
 <p>
-Progress:
+📈 Progress:
 <span id="progressPercent">
-82
+0
 </span>%
 </p>
-
 </div>
 <div style="background:#ffd6e5;border-radius:20px;height:20px;">
     <div id="xpBar"
@@ -223,10 +227,23 @@ function updateWeight(){
     "currentWeight"
     ).innerText = weight;
 
-    let percent =
-    Math.round(
-    (weight / 45) * 100
-    );
+   let startWeight = 37;
+let targetWeight = 45;
+
+let percent =
+Math.round(
+((weight - startWeight) /
+(targetWeight - startWeight))
+* 100
+);
+
+if(percent < 0){
+    percent = 0;
+}
+
+if(percent > 100){
+    percent = 100;
+}
 
     document.getElementById(
     "progressPercent"
