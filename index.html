@@ -151,9 +151,13 @@ Math.min((xp / 100) * 100, 100) + "%";
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 checkboxes.forEach((box, index) => {
 
-    if(localStorage.getItem("check" + index) === "true"){
-        box.checked = true;
-    }
+    if(
+localStorage.getItem(
+"day" + currentDay + "_check" + index
+) === "true"
+){
+    box.checked = true;
+}
 
 });
 checkboxes.forEach(box => {
@@ -162,7 +166,7 @@ checkboxes.forEach(box => {
         const index = Array.from(checkboxes).indexOf(box);
 
 localStorage.setItem(
-    "check" + index,
+    "day" + currentDay + "_check" + index,
     box.checked
 );
         if(box.checked){
