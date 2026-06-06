@@ -105,8 +105,13 @@ Progress:
 <div class="card">
 <h2 id="dayTitle">📅 Day 1 of 30</h2>
 
-<button>⬅️ Hari Sebelumnya</button>
-<button>➡️ Hari Berikutnya</button>
+<button onclick="prevDay()">
+⬅️ Hari Sebelumnya
+</button>
+
+<button onclick="nextDay()">
+➡️ Hari Berikutnya
+</button>
 <br><br>
     <h2>📋 Daily Quest</h2>
 
@@ -158,10 +163,17 @@ Progress:
 </div>
 <script>
 
-let xp = localStorage.getItem("xp") || 0;let lastAction = 0;let level = Math.floor(xp / 100) + 1;let weight =
+let xp = localStorage.getItem("xp") || 0;
+    let currentDay =
+parseInt(
+localStorage.getItem("currentDay")
+) || 1;
+    let lastAction = 0;let level = Math.floor(xp / 100) + 1;let weight =
 localStorage.getItem("weight") || 37;
 
 document.getElementById("xp").innerText = xp;document.getElementById("level").innerText = level;
+    document.getElementById("dayTitle").innerText =
+"📅 Day " + currentDay + " of 30";
     updateCat();
     updateWeight();
 document.getElementById("xpBar").style.width =
@@ -289,6 +301,49 @@ function resetProgress(){
     localStorage.clear();
 
     location.reload();
+
+}
+    function nextDay(){
+
+    if(currentDay < 30){
+
+        currentDay++;
+
+        localStorage.setItem(
+            "currentDay",
+            currentDay
+        );
+
+        document.getElementById(
+            "dayTitle"
+        ).innerText =
+        "📅 Day " +
+        currentDay +
+        " of 30";
+
+    }
+
+}
+
+function prevDay(){
+
+    if(currentDay > 1){
+
+        currentDay--;
+
+        localStorage.setItem(
+            "currentDay",
+            currentDay
+        );
+
+        document.getElementById(
+            "dayTitle"
+        ).innerText =
+        "📅 Day " +
+        currentDay +
+        " of 30";
+
+    }
 
 }
 </script>
