@@ -8,17 +8,38 @@
 <style>
 body{
     font-family: Arial, sans-serif;
-    background:#ffe4ec;
+    background:linear-gradient(
+        180deg,
+        #ffe4ec,
+        #fff5f8
+    );
+
     margin:0;
+
     padding:20px;
+
+    max-width:700px;
+
+    margin:auto;
 }
 
 .card{
+
     background:white;
+
     border-radius:20px;
+
     padding:20px;
+
     margin-bottom:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+    box-shadow:
+    0 4px 15px rgba(
+    255,105,180,0.15
+    );
+
+    border:2px solid #ffe3ee;
+
 }
 
 h1{
@@ -30,11 +51,29 @@ h1{
 }
 
 button{
+
     background:#ff7aa8;
+
     color:white;
+
     border:none;
+
     padding:10px 15px;
-    border-radius:10px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    margin:3px;
+
+    transition:0.2s;
+
+}
+
+button:hover{
+
+    transform:scale(1.05);
+
 }
     .progressBar{
 
@@ -69,6 +108,33 @@ button{
     transition:0.5s;
 
 }
+    #petFace{
+
+    text-align:center;
+
+    animation:
+    floatCat 2s infinite;
+
+}
+
+@keyframes floatCat{
+
+    0%{
+        transform:
+        translateY(0px);
+    }
+
+    50%{
+        transform:
+        translateY(-5px);
+    }
+
+    100%{
+        transform:
+        translateY(0px);
+    }
+
+}
 </style>
 </head>
 
@@ -87,6 +153,12 @@ button{
 
 <button onclick="resetProgress()">
 🔄 Reset
+</button>
+    <button onclick="addStreak()">
+🔥 Add Streak
+        <button onclick="exportData()">
+💾 Export
+</button>
 </button>
     <div style="font-size:80px;text-align:center;" id="cat">
 🐱
@@ -219,6 +291,10 @@ Simpan
     Week:
     <span id="statsWeek">1</span>
 </p>
+        <p>
+🔥 Streak:
+<span id="statsStreak">0</span>
+</p>
 
 </div>
 
@@ -240,6 +316,10 @@ localStorage.getItem("currentDay")
 ) || 1;
     let lastAction = 0;let level = Math.floor(xp / 100) + 1;let weight =
 localStorage.getItem("weight") || 37;
+    let streak =
+parseInt(
+localStorage.getItem("streak")
+) || 0;
 
 document.getElementById("xp").innerText = xp;document.getElementById("level").innerText = level;
     document.getElementById("dayTitle").innerText =
@@ -320,6 +400,10 @@ if(currentDay >= 22){
 document.getElementById(
 "statsWeek"
 ).innerText = week;
+
+document.getElementById(
+"statsStreak"
+).innerText = streak;
 
 }
     function updateAchievements(){
@@ -406,6 +490,17 @@ achievements.push(
 currentDay >= 30 ?
 "✅ 👑 30 Day Champion" :
 "🔒 👑 30 Day Champion"
+);
+        achievements.push(
+streak >= 3 ?
+"✅ 🔥 3 Day Streak" :
+"🔒 🔥 3 Day Streak"
+);
+
+achievements.push(
+streak >= 7 ?
+"✅ 🔥 7 Day Streak" :
+"🔒 🔥 7 Day Streak"
 );
         document.getElementById(
 "achievementList"
@@ -545,6 +640,33 @@ function resetProgress(){
     localStorage.clear();
 
     location.reload();
+
+}
+    function addStreak(){
+
+    streak++;
+
+    localStorage.setItem(
+    "streak",
+    streak
+    );
+
+    updateStats();
+
+    updateAchievements();
+
+}
+    function exportData(){
+
+    let data =
+
+    "XP: " + xp + "\n" +
+    "Level: " + level + "\n" +
+    "Weight: " + weight + "\n" +
+    "Day: " + currentDay + "\n" +
+    "Streak: " + streak;
+
+    alert(data);
 
 }
     const days = {
