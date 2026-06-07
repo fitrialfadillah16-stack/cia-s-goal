@@ -135,12 +135,82 @@ button:hover{
     }
 
 }
+    /* Styling tambahan untuk Quotes & Water Tracker */
+.motivation-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(255,105,180,0.15);
+    border: 2px solid #ffe3ee;
+}
+
+.quotes-box {
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    color: #ff4f87;
+    margin-bottom: 15px;
+    font-size: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px dashed #ffe6f0;
+}
+
+.water-tracker-box h4 {
+    margin: 0 0 10px 0;
+    color: #4dabf7;
+    font-size: 14px;
+    text-align: center;
+}
+
+.glasses-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.glass-icon {
+    font-size: 24px;
+    cursor: pointer;
+    filter: grayscale(100%) opacity(30%);
+    transition: transform 0.2s, filter 0.2s;
+}
+
+.glass-icon:hover {
+    transform: scale(1.2);
+}
+
+.glass-icon.active {
+    filter: grayscale(0%) opacity(100%);
+    transform: scale(1.1);
+}
+
+.water-status {
+    text-align: center;
+    font-size: 12px;
+    margin: 5px 0 0 0;
+    color: #495057;
+    font-weight: bold;
+}
 </style>
 </head>
 
 <body>
 
 <h1>💗 Cia's Goal</h1>
+<div class="motivation-container">
+    <div class="quotes-box">
+        <span id="quote-text">✨ "Semangat hari ini, Cia! Mochi nungguin kamu gembul nih! 🐈"</span>
+    </div>
+
+    <div class="water-tracker-box">
+        <h4>💧 Water Tracker (Target: 8 Gelas)</h4>
+        <div class="glasses-container" id="glasses-container">
+            </div>
+        <p class="water-status"><span id="water-count">0</span> / 8 Gelas Terpenuhi</p>
+    </div>
+</div>
 
 <div class="card">
     <h2>Level <span id="level">1</span></h2>
