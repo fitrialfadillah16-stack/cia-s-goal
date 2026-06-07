@@ -1135,45 +1135,35 @@ function mochiNgomong() {
     }
 }
 
-// ==================== LOGIKA SINKRONISASI TOTAL (DATA + CHECKLIST) ====================
-function sinkronisasiXP() {
-    let xpInput = prompt("Masukkan total XP kamu yang ada di Laptop saat ini:", xp);
-    
-    if (xpInput !== null && !isNaN(xpInput) && xpInput !== "") {
-        xp = parseInt(xpInput);
-        localStorage.setItem("xp", xp);
-        
-        level = Math.floor(xp / 100) + 1;
-        let jumlahKlikGelas = Math.floor((xp % 100) / 10); 
-        
-        localStorage.setItem("waterCount", jumlahKlikGelas);
-        localStorage.setItem("lastCheckedDate", new Date().toDateString());
+// ==================== LOGIKA SINKRONISASI TOTAL ANTI-GAGAL ====================
+// Fungsi 1: Dijalankan di LAPTOP buat dapetin kode rahasia
+function ambilKodeBackup() {
+    let semuaData = JSON.stringify(localStorage);
+    prompt("Copy semua kode rahasia di bawah ini, lalu kirim ke HP kamu (bisa lewat WA):", semuaData);
+}
 
-        document.getElementById("xp").innerText = xp;
-        document.getElementById("level").innerText = level;
-        document.getElementById("xpBar").style.width = Math.min((xp / 100) * 100, 100) + "%";
-        
-        if (typeof updateCat === "function") updateCat();
-        if (typeof updateAchievements === "function") updateAchievements();
-        if (typeof updateStats === "function") updateStats();
-        
-        const waterProgress = document.getElementById("waterProgress");
-        if (waterProgress) {
-            waterProgress.innerText = jumlahKlikGelas;
-            for (let i = 1; i <= 8; i++) {
-                let glass = document.getElementById("glass" + i);
-                if (glass) {
-                    if (i <= jumlahKlikGelas) {
-                        glass.classList.add("active");
-                    } else {
-                        glass.classList.remove("active");
-                    }
-                }
+// Fungsi 2: Dijalankan di HP buat masukin kode dari laptop
+function masukkanKodeBackup() {
+    let kodeInput = prompt("Paste (tempel) kode rahasia yang kamu copy dari Laptop di sini:");
+    
+    if (kodeInput !== null && kodeInput.trim() !== "") {
+        try {
+            let dataObjek = JSON.parse(kodeInput);
+            
+            for (let kunci in dataObjek) {
+                localStorage.setItem(kunci, dataObjek[kunci]);
             }
+            
+            alert("🎉 SINKRONISASI SUKSES TOTAL!\n\nSemua data checklist, berat badan, progress, achievement, XP, dan Level sudah pindah ke HP. Halaman akan otomatis di-refresh sekarang!");
+            window.location.reload();
+            
+        } catch (error) {
+            alert("❌ Kode yang kamu masukkan salah atau tidak lengkap, Fitri. Coba copy ulang lagi ya!");
         }
-        alert("🎉 BERHASIL TOTAL! Angka XP, Level, dan status tracker air di HP kamu sekarang sudah sama persis dengan di laptop! 🚀");
     }
 }
+// ==============================================================================
+
 </script>
 
 <div class="card">
@@ -1197,9 +1187,14 @@ function sinkronisasiXP() {
     
     <hr style="border: 0; border-top: 1px dashed #eee; margin: 15px 0;">
     
-    <button onclick="sinkronisasiXP()" style="background-color: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 11px; cursor: pointer;">
-        🔄 Sinkronisasi Data (HP ⇄ Laptop)
-    </button>
+    <div style="display: flex; gap: 10px; justify-content: center;">
+        <button onclick="ambilKodeBackup()" style="background-color: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 20px; font-size: 11px; cursor: pointer;">
+            📤 1. Ambil Kode Laptop
+        </button>
+        <button onclick="masukkanKodeBackup()" style="background-color: #007bff; color: white; border: none; padding: 8px 12px; border-radius: 20px; font-size: 11px; cursor: pointer;">
+            📥 2. Pindahkan ke HP
+        </button>
+    </div>
 </div>
 
 </body>
