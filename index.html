@@ -1075,7 +1075,7 @@ function prevDay(){
        updateQuote(currentDay);
         initWaterTracker();
     }
-} // <--- Batas akhir fungsi bawaan kamu yang lama, biarkan dia menutup dengan aman.
+}
 
 // ==================== LOGIKA XP SHOP ====================
 function beliHadiah(namaHadiah, hargaXP) {
@@ -1096,9 +1096,9 @@ function beliHadiah(namaHadiah, hargaXP) {
     document.getElementById("level").innerText = level;
     document.getElementById("xpBar").style.width = Math.min((xp / 100) * 100, 100) + "%";
     
-    updateCat();
-    updateAchievements();
-    updateStats();
+    if (typeof updateCat === "function") updateCat();
+    if (typeof updateAchievements === "function") updateAchievements();
+    if (typeof updateStats === "function") updateStats();
 
     if (namaHadiah.includes("Mochi")) {
         alert("🎉 Nyam nyam! Sukses membeli " + namaHadiah + "! Mochi kenyang banget dan makin sayang sama Cia! 🐈❤");
@@ -1106,7 +1106,6 @@ function beliHadiah(namaHadiah, hargaXP) {
         alert("🎉 Keren! Sukses menukarkan XP dengan " + namaHadiah + "!\n\nSilakan screenshot layar ini dan kirim ke Rizky buat ditagih hadiahnya sekarang! 📑 Sponsoring actived!");
     }
 }
-// ========================================================
 
 // ==================== LOGIKA RANDOM SPEECH MOCHI ====================
 const bankOmonganMochi = [
@@ -1121,9 +1120,6 @@ const bankOmonganMochi = [
 ];
 
 function mochiNgomong() {
-    // 🔊 Baris audio di bawah ini yang bikin si Mochi beneran bunyi meong asli!
-    new Audio("https://actions.google.com/sounds/v1/animals/cat_purr_meow.ogg").play().catch(e => console.log("Audio play blocked"));
-
     const acakIdx = Math.floor(Math.random() * bankOmonganMochi.length);
     const quoteText = document.getElementById('quote-text');
     if (quoteText) {
@@ -1138,8 +1134,46 @@ function mochiNgomong() {
         setTimeout(() => { box.style.transform = 'scale(1)'; }, 100);
     }
 }
-// ====================================================================
 
+// ==================== LOGIKA SINKRONISASI TOTAL (DATA + CHECKLIST) ====================
+function sinkronisasiXP() {
+    let xpInput = prompt("Masukkan total XP kamu yang ada di Laptop saat ini:", xp);
+    
+    if (xpInput !== null && !isNaN(xpInput) && xpInput !== "") {
+        xp = parseInt(xpInput);
+        localStorage.setItem("xp", xp);
+        
+        level = Math.floor(xp / 100) + 1;
+        let jumlahKlikGelas = Math.floor((xp % 100) / 10); 
+        
+        localStorage.setItem("waterCount", jumlahKlikGelas);
+        localStorage.setItem("lastCheckedDate", new Date().toDateString());
+
+        document.getElementById("xp").innerText = xp;
+        document.getElementById("level").innerText = level;
+        document.getElementById("xpBar").style.width = Math.min((xp / 100) * 100, 100) + "%";
+        
+        if (typeof updateCat === "function") updateCat();
+        if (typeof updateAchievements === "function") updateAchievements();
+        if (typeof updateStats === "function") updateStats();
+        
+        const waterProgress = document.getElementById("waterProgress");
+        if (waterProgress) {
+            waterProgress.innerText = jumlahKlikGelas;
+            for (let i = 1; i <= 8; i++) {
+                let glass = document.getElementById("glass" + i);
+                if (glass) {
+                    if (i <= jumlahKlikGelas) {
+                        glass.classList.add("active");
+                    } else {
+                        glass.classList.remove("active");
+                    }
+                }
+            }
+        }
+        alert("🎉 BERHASIL TOTAL! Angka XP, Level, dan status tracker air di HP kamu sekarang sudah sama persis dengan di laptop! 🚀");
+    }
+}
 </script>
 
 <div class="card">
@@ -1160,6 +1194,12 @@ function mochiNgomong() {
         🐱
     </p>
     <p style="font-size: 11px; color: #888;">(Klik si Mochi biar dia ngomong sesuatu! 👆)</p>
+    
+    <hr style="border: 0; border-top: 1px dashed #eee; margin: 15px 0;">
+    
+    <button onclick="sinkronisasiXP()" style="background-color: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 11px; cursor: pointer;">
+        🔄 Sinkronisasi Data (HP ⇄ Laptop)
+    </button>
 </div>
 
 </body>
