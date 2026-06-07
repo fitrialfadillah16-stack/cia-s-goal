@@ -302,10 +302,6 @@ Newbie
 <div id="weightHistory">
 Belum ada data
 </div>
-
-<pre id="weightChart">
-Belum ada grafik
-</pre>
         <p>
 🔥 Streak:
 <span id="statsStreak">0</span>
@@ -348,7 +344,6 @@ updateWeight();
 updateAchievements();
 updateStats();
 updateWeightHistory();
-updateChart();
 document.getElementById("xpBar").style.width =
 Math.min((xp / 100) * 100, 100) + "%";
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -616,8 +611,7 @@ JSON.stringify(history)
 updateAchievements();
 updateStats();
 updateWeightHistory();
-updateChart();
-
+        
 }
 
 function updateWeightHistory(){
@@ -644,53 +638,6 @@ function updateWeightHistory(){
     history.join("<br>");
 
 }
-
-function updateChart(){
-
-    let history = JSON.parse(
-    localStorage.getItem(
-    "weightHistory"
-    )
-    ) || [];
-
-    if(history.length === 0){
-
-        document.getElementById(
-        "weightChart"
-        ).innerText =
-        "Belum ada grafik";
-
-        return;
-    }
-
-    let chart = "";
-
-    history.forEach(weight => {
-
-        let dots =
-        "●".repeat(
-        Math.max(
-        1,
-        Math.round(
-        (weight - 36) * 2
-        )
-        )
-        );
-
-        chart +=
-        weight +
-        "kg " +
-        dots +
-        "\n";
-
-    });
-
-    document.getElementById(
-    "weightChart"
-    ).innerText = chart;
-
-}
-
     const days = {
 
 1: `
