@@ -332,6 +332,10 @@ let xp = localStorage.getItem("xp") || 0;
 parseInt(
 localStorage.getItem("currentDay")
 ) || 1;
+
+if(currentDay > 7){
+    currentDay = 7;
+}
     let lastAction = 0;let level = Math.floor(xp / 100) + 1;let weight =
 localStorage.getItem("weight") || 37;
     let streak =
