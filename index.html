@@ -883,6 +883,86 @@ ${malamHTML}<br>
 `;
 }
 // ============================================================================
+    // ==================== LOGIKA QUOTES & WATER TRACKER ====================
+const bankQuotes = [
+    "✨ Semangat hari ini, Cia! Mochi nungguin kamu tumbuh gembul nih! 🐈",
+    "💗 Kata Pacar: Jangan lupa makan tepat waktu ya cantik, dietnya nanti dulu!",
+    "💧 Minum air putih yang cukup ya Cia, biar proses gainer kamu makin maksimal!",
+    "✨ Setiap suapan adalah investasi menuju target 45 kg. Yuk bisa yuk! 🎯",
+    "💗 Kata Pacar: Kamu berharga banget, makanya harus sehat terus ya! 🥰",
+    "🐈 Mochi males-malesan kalau Cia malas makan. Ayo habiskan porsi harimu!",
+    "✨ Progres 19% itu awal yang keren. Sedikit demi sedikit lama-lama 45 kg!",
+    "💗 Kata Pacar: Semangat kejar goals-mu! Sponsor utama selalu mendukungmu 💸",
+    "🥛 Susu sebelum tidurnya jangan sampai kelewat ya malam nanti!",
+    "✨ Kurangi rokoknya, banyakin camilannya. Sehat itu bonus, gembul itu mutlak!"
+];
+
+let currentWater = 0;
+
+function updateQuote(day) {
+    const quoteIdx = (day - 1) % bankQuotes.length;
+    document.getElementById('quote-text').innerText = bankQuotes[quoteIdx];
+}
+
+function initWaterTracker() {
+    const container = document.getElementById('glasses-container');
+    if (!container) return;
+    container.innerHTML = ''; 
+
+    currentWater = parseInt(localStorage.getItem("water_day_" + currentDay)) || 0;
+
+    for (let i = 1; i <= 8; i++) {
+        const glass = document.createElement('span');
+        glass.classList.add('glass-icon');
+        glass.innerText = '🥛';
+        glass.dataset.index = i;
+
+        if (i <= currentWater) {
+            glass.classList.add('active');
+        }
+
+        glass.addEventListener('click', function() {
+            toggleWater(i);
+        });
+
+        container.appendChild(glass);
+    }
+    document.getElementById('water-count').innerText = currentWater;
+}
+
+function toggleWater(index) {
+    if (index === currentWater) {
+        currentWater = index - 1;
+    } else {
+        currentWater = index;
+    }
+
+    const glasses = document.querySelectorAll('.glass-icon');
+    glasses.forEach((glass, idx) => {
+        if (idx < currentWater) {
+            glass.classList.add('active');
+        } else {
+            glass.classList.remove('active');
+        }
+    });
+
+    document.getElementById('water-count').innerText = currentWater;
+    localStorage.setItem("water_day_" + currentDay, currentWater);
+
+    if (currentWater === 8) {
+        alert("🎉 Hore! Target minum 8 gelas hari ini terpenuhi! Mochi bangga banget sama Cia! +10 XP!");
+        xp = parseInt(xp) + 10;
+        localStorage.setItem("xp", xp);
+        document.getElementById("xp").innerText = xp;
+        level = Math.floor(xp / 100) + 1;
+        document.getElementById("level").innerText = level;
+        document.getElementById("xpBar").style.width = Math.min((xp / 100) * 100, 100) + "%";
+        updateCat();
+        updateAchievements();
+        updateStats();
+    }
+}
+// ============================================================================
     function loadDay(){
 
     document.getElementById(
@@ -956,54 +1036,35 @@ updateStats();
         });
 
     });
+// Tambahkan 2 baris ini di bagian bawah dalam fungsi loadDay() kamu
+    updateQuote(currentDay);
+    initWaterTracker();
 
 }
     loadDay();
     
     function nextDay(){
-
     if(currentDay < 30){
-
         currentDay++;
-
-        localStorage.setItem(
-            "currentDay",
-            currentDay
-        );
-
-        document.getElementById(
-            "dayTitle"
-        ).innerText =
-        "📅 Day " +
-        currentDay +
-        " of 30";
-       loadDay();
-
+        localStorage.setItem("currentDay", currentDay);
+        document.getElementById("dayTitle").innerText = "📅 Day " + currentDay + " of 30";
+        loadDay();
+        // --- Tambahan agar air & quotes ganti hari ---
+        updateQuote(currentDay);
+        initWaterTracker();
     }
-
 }
 
 function prevDay(){
-
     if(currentDay > 1){
-
         currentDay--;
-
-        localStorage.setItem(
-            "currentDay",
-            currentDay
-        );
-
-        document.getElementById(
-            "dayTitle"
-        ).innerText =
-        "📅 Day " +
-        currentDay +
-        " of 30";
+        localStorage.setItem("currentDay", currentDay);
+        document.getElementById("dayTitle").innerText = "📅 Day " + currentDay + " of 30";
         loadDay();
-
+        // --- Tambahan agar air & quotes ganti hari ---
+        updateQuote(currentDay);
+        initWaterTracker();
     }
-
 }
 </script>
 </body>
