@@ -147,6 +147,10 @@ Simpan
     Achievement:
     <span id="statsAchievement">0</span>
 </p>
+        <p>
+    Week:
+    <span id="statsWeek">1</span>
+</p>
 
 </div>
 
@@ -231,6 +235,23 @@ Math.min((xp / 100) * 100, 100) + "%";
     document.getElementById(
     "statsWeight"
     ).innerText = weight;
+        let week = 1;
+
+if(currentDay >= 8){
+    week = 2;
+}
+
+if(currentDay >= 15){
+    week = 3;
+}
+
+if(currentDay >= 22){
+    week = 4;
+}
+
+document.getElementById(
+"statsWeek"
+).innerText = week;
 
 }
     function updateAchievements(){
@@ -294,6 +315,29 @@ achievements.push(
 currentDay >= 1 ?
 "✅ 💗 Disponsori Pacar" :
 "🔒 💗 Disponsori Pacar"
+);
+        achievements.push(
+currentDay >= 7 ?
+"✅ 🗓️ Week 1 Complete" :
+"🔒 🗓️ Week 1 Complete"
+);
+
+achievements.push(
+currentDay >= 14 ?
+"✅ 🗓️ Week 2 Complete" :
+"🔒 🗓️ Week 2 Complete"
+);
+
+achievements.push(
+currentDay >= 21 ?
+"✅ 🗓️ Week 3 Complete" :
+"🔒 🗓️ Week 3 Complete"
+);
+
+achievements.push(
+currentDay >= 30 ?
+"✅ 👑 30 Day Champion" :
+"🔒 👑 30 Day Champion"
 );
         document.getElementById(
 "achievementList"
