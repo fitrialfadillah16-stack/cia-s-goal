@@ -231,11 +231,18 @@ button:hover{
 </button>
 </button>
     <div style="font-size:80px;text-align:center;" id="cat">
-🐱
-</div>
-<div class="card">
+        <span id="petFace">🐱</span>
+    </div>
 
-<h2>⚖️ Weight Tracker</h2>
+    <div class="card" style="background-color: #fff0f5; border: 2px solid #ffc0cb; padding: 10px; margin-bottom: 20px;">
+        <label style="font-weight: bold; cursor: pointer; color: #d63384; font-size: 14px;">
+            <input type="checkbox" id="modeHaid" onchange="toggleModeHaid()"> 
+            ❤️ Mode Halangan (Self-Care)
+        </label>
+    </div>
+
+    <div class="card">
+        <h2>⚖️ Weight Tracker</h2>
 
 <input
 id="weightInput"
@@ -1157,11 +1164,38 @@ function masukkanKodeBackup() {
             alert("🎉 SINKRONISASI SUKSES TOTAL!\n\nSemua data checklist, berat badan, progress, achievement, XP, dan Level sudah pindah ke HP. Halaman akan otomatis di-refresh sekarang!");
             window.location.reload();
             
-        } catch (error) {
+} catch (error) {
             alert("❌ Kode yang kamu masukkan salah atau tidak lengkap, Fitri. Coba copy ulang lagi ya!");
         }
     }
 }
+// ==============================================================================
+// FITUR BARU: Mode Halangan (Self-Care)
+function toggleModeHaid() {
+    const isHaid = document.getElementById("modeHaid").checked;
+    localStorage.setItem("modeHaid", isHaid);
+    updateMoodMochi();
+    alert(isHaid ? "Mode Halangan Aktif! Mochi & Rizky nemenin ya. 🧸" : "Mode normal aktif! Semangat lagi! ✨");
+}
+
+function updateMoodMochi() {
+    const isHaid = localStorage.getItem("modeHaid") === "true";
+    const petFace = document.getElementById("petFace");
+    if (petFace) {
+        petFace.innerText = isHaid ? "🥺" : "🐱";
+    }
+}
+
+// Tambahkan ini agar saat refresh, status Mochi tidak hilang
+window.onload = function() {
+    const isHaid = localStorage.getItem("modeHaid") === "true";
+    const el = document.getElementById("modeHaid");
+    if (el) el.checked = isHaid;
+    updateMoodMochi();
+    
+    // Pastikan fungsi lama kamu tetap jalan
+    if (typeof initWaterTracker === "function") initWaterTracker();
+};
 // ==============================================================================
 
 </script>
