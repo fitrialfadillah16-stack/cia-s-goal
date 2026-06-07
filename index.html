@@ -235,72 +235,54 @@ Math.min((xp / 100) * 100, 100) + "%";
 }
     function updateAchievements(){
 
-    let achievements = [];
+   let achievements = [];
+
+achievements.push(
+currentDay >= 1 ?
+"✅ 🥚 Awal Perjuangan" :
+"🔒 🥚 Awal Perjuangan"
+);
+
+achievements.push(
+level >= 2 ?
+"✅ 🍳 Breakfast Warrior" :
+"🔒 🍳 Breakfast Warrior"
+);
+
+achievements.push(
+level >= 3 ?
+"✅ 💪 Workout Rookie" :
+"🔒 💪 Workout Rookie"
+);
+
+achievements.push(
+level >= 5 ?
+"✅ 🐱 Cat Trainer" :
+"🔒 🐱 Cat Trainer"
+);
+
+achievements.push(
+weight >= 38 ?
+"✅ ⚖️ +1KG Club" :
+"🔒 ⚖️ +1KG Club"
+);
+
+achievements.push(
+weight >= 40 ?
+"✅ 🥛 Milk Addict" :
+"🔒 🥛 Milk Addict"
+);
+
+achievements.push(
+weight >= 45 ?
+"✅ 🎯 Goal Crusher" :
+"🔒 🎯 Goal Crusher"
+);
         if(currentDay >= 1){
     achievements.push(
     "🥚 Awal Perjuangan"
     );
 }
-
-if(level >= 2){
-    achievements.push(
-    "🍳 Breakfast Warrior"
-    );
-}
-
-if(level >= 3){
-    achievements.push(
-    "💪 Workout Rookie"
-    );
-}
-
-if(level >= 5){
-    achievements.push(
-    "🐱 Cat Trainer"
-    );
-}
-
-    if(xp >= 100){
-        achievements.push(
-        "🏆 Level 2 Reached"
-        );
-    }
-
-    if(xp >= 300){
-        achievements.push(
-        "🏆 Level 4 Reached"
-        );
-    }
-
-    if(weight >= 38){
-        if(weight >= 39){
-    achievements.push(
-    "🥛 Milk Addict"
-    );
-}
-        achievements.push(
-        "🏆 +1KG Club"
-        );
-    }
-
-    if(weight >= 40){
-        achievements.push(
-        "🏆 40KG Reached"
-        );
-    }
-
-    if(weight >= 45){
-        achievements.push(
-        "🏆 Goal Completed"
-        );
-    }
-
-    if(achievements.length === 0){
-        achievements.push(
-        "🥚 Belum ada achievement"
-        );
-    }
-
     document.getElementById(
 "achievementList"
 ).innerHTML =
