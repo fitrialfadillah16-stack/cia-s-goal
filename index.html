@@ -300,6 +300,11 @@ Newbie
         <h3>📈 Riwayat Berat</h3>
 
 <div id="weightHistory">
+    <br>
+
+<pre id="weightChart">
+Belum ada grafik
+</pre>
 
 Belum ada data
 
@@ -342,6 +347,7 @@ updateWeight();
 updateAchievements();
 updateStats();
 updateWeightHistory();
+updateChart();
 document.getElementById("xpBar").style.width =
 Math.min((xp / 100) * 100, 100) + "%";
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -609,6 +615,7 @@ JSON.stringify(history)
 updateAchievements();
 updateStats();
 updateWeightHistory();
+updateChart();
 
 }
 
@@ -725,6 +732,48 @@ function resetProgress(){
 
         return;
     }
+        function updateChart(){
+
+    let history = JSON.parse(
+    localStorage.getItem(
+    "weightHistory"
+    )
+    ) || [];
+
+    if(history.length === 0){
+
+        document.getElementById(
+        "weightChart"
+        ).innerText =
+        "Belum ada grafik";
+
+        return;
+    }
+
+    let chart = "";
+
+    history.forEach(weight => {
+
+        let dots =
+        "●".repeat(
+        Math.round(
+        (weight - 36) * 2
+        )
+        );
+
+        chart +=
+        weight +
+        "kg " +
+        dots +
+        "\n";
+
+    });
+
+    document.getElementById(
+    "weightChart"
+    ).innerText = chart;
+
+}
 
     document.getElementById(
     "weightHistory"
