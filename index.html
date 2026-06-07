@@ -157,6 +157,34 @@ Simpan
 <div class="card">
     <div class="card">
 
+    <h2>🐱 Companion</h2>
+
+    <p id="petFace">
+        🐱
+    </p>
+
+    <p>
+        Nama:
+        Mochi
+    </p>
+
+    <p>
+        Level:
+        <span id="petLevel">
+            1
+        </span>
+    </p>
+
+    <p>
+        Mood:
+        <span id="petMood">
+            Happy
+        </span>
+    </p>
+
+</div>
+    <div class="card">
+
     <h2>📊 Statistics</h2>
 
     <p>
@@ -386,20 +414,38 @@ a => a.startsWith("✅")
 function updateCat(){
 
     let cat = "🐱";
+    let mood = "Happy";
 
     if(level >= 5){
         cat = "🐈";
+        mood = "Growing";
     }
 
     if(level >= 10){
         cat = "😺";
+        mood = "Strong";
     }
 
     if(level >= 15){
         cat = "😸";
+        mood = "Elite";
     }
 
-    document.getElementById("cat").innerText = cat;
+    document.getElementById(
+    "cat"
+    ).innerText = cat;
+
+    document.getElementById(
+    "petFace"
+    ).innerText = cat;
+
+    document.getElementById(
+    "petLevel"
+    ).innerText = level;
+
+    document.getElementById(
+    "petMood"
+    ).innerText = mood;
 
 }
     function saveWeight(){
