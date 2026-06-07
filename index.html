@@ -217,9 +217,18 @@ button:hover{
     <p>⚖️ Berat sekarang: 37 kg</p>
     <p>🎯 Target: 45 kg</p>
     <p>✨ XP: <span id="xp">0</span> / 100</p>
+    
+    <div style="margin: 15px 0; padding: 10px; background-color: #fff0f5; border: 1px solid #ffc0cb; border-radius: 10px;">
+        <label style="font-weight: bold; cursor: pointer; color: #d63384; font-size: 14px;">
+            <input type="checkbox" id="modeHaid" onchange="toggleModeHaid()"> 
+            ❤️ Mode Halangan (Self-Care)
+        </label>
+    </div>
+
     <button onclick="undoXP()">
-↩️ Undo
-</button>
+        ↩️ Undo
+    </button>
+</div>
 
 <button onclick="resetProgress()">
 🔄 Reset
@@ -1120,13 +1129,30 @@ const bankOmonganMochi = [
 ];
 
 function mochiNgomong() {
+    // Cek apakah mode haid lagi aktif
+    const isHaid = localStorage.getItem("modeHaid") === "true";
+    const petFace = document.getElementById("petFace");
+    
+    // Ganti wajah Mochi otomatis sesuai mode
+    if (petFace) {
+        petFace.innerText = isHaid ? "🥺" : "🐱";
+    }
+
     const acakIdx = Math.floor(Math.random() * bankOmonganMochi.length);
     const quoteText = document.getElementById('quote-text');
+    
     if (quoteText) {
         quoteText.innerText = bankOmonganMochi[acakIdx];
     } else {
         alert(bankOmonganMochi[acakIdx]);
     }
+    
+    const box = document.querySelector('.quotes-box');
+    if (box) {
+        box.style.transform = 'scale(0.98)';
+        setTimeout(() => { box.style.transform = 'scale(1)'; }, 100);
+    }
+}
     
     const box = document.querySelector('.quotes-box');
     if (box) {
