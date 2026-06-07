@@ -125,6 +125,26 @@ Simpan
 </div>
 
 <div class="card">
+    <div class="card">
+
+    <h2>📊 Statistics</h2>
+
+    <p>
+        XP Total:
+        <span id="statsXP">0</span>
+    </p>
+
+    <p>
+        Level:
+        <span id="statsLevel">1</span>
+    </p>
+
+    <p>
+        Berat:
+        <span id="statsWeight">37</span> kg
+    </p>
+
+</div>
 
     <h2>🏆 Achievement</h2>
 
@@ -151,6 +171,7 @@ document.getElementById("xp").innerText = xp;document.getElementById("level").in
     updateCat();
 updateWeight();
 updateAchievements();
+updateStats();
 document.getElementById("xpBar").style.width =
 Math.min((xp / 100) * 100, 100) + "%";
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -193,6 +214,21 @@ Math.min((xp / 100) * 100, 100) + "%";
     });
 
 });
+    function updateStats(){
+
+    document.getElementById(
+    "statsXP"
+    ).innerText = xp;
+
+    document.getElementById(
+    "statsLevel"
+    ).innerText = level;
+
+    document.getElementById(
+    "statsWeight"
+    ).innerText = weight;
+
+}
     function updateAchievements(){
 
     let achievements = [];
@@ -273,6 +309,7 @@ function updateCat(){
 
     updateWeight();
 updateAchievements();
+updateStats();
 
 }
 
@@ -660,7 +697,8 @@ function resetProgress(){
             ) + "%";
 
             updateCat();
-            updateAchievements();
+updateAchievements();
+updateStats();
 
         });
 
