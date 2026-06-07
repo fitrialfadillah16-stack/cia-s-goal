@@ -291,7 +291,9 @@ achievements.join("<br>");
 document.getElementById(
 "statsAchievement"
 ).innerText =
-achievements.length;
+achievements.filter(
+a => a.startsWith("✅")
+).length;
 }
 function updateCat(){
 
