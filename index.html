@@ -199,10 +199,10 @@ button:hover{
 <body>
 
 <h1>💗 Cia's Goal</h1>
-<div class="motivation-container">
-    <div class="quotes-box">
-        <span id="quote-text">✨ "Semangat hari ini, Cia! Mochi nungguin kamu gembul nih! 🐈"</span>
-    </div>
+<div class="quotes-box" style="cursor: pointer;" onclick="mochiNgomong()">
+    <span id="quote-text">✨ "Semangat hari ini, Cia! Coba klik kotak ini atau klik Mochi buat dengerin dia ngomong! 🐈"</span>
+    <br><small style="color: #ff9ac6; font-size: 10px;">(Klik untuk acak quotes/jokes Mochi)</small>
+</div>
 
     <div class="water-tracker-box">
         <h4>💧 Water Tracker Harian (Target: 8 Gelas / Hari)</h4>
@@ -311,7 +311,7 @@ Simpan
 
     <h2>🐱 Companion</h2>
 
-    <p id="petFace" style="font-size:60px;">
+<p id="petFace" onclick="mochiNgomong()" style="font-size:60px; cursor: pointer;">
     🐱
 </p>
 
@@ -1111,6 +1111,33 @@ function beliHadiah(namaHadiah, hargaXP) {
     }
 }
 // ========================================================
+// ==================== LOGIKA RANDOM SPEECH MOCHI ====================
+const bankOmonganMochi = [
+    "🐈: 'Cia, hari ini udah dapet berapa XP? Buruan tuker seblak biar Rizky pusing! 🍲'",
+    "✨: 'Kata Rizky: Semangat makannya sayang, pipi gembulmu itu aset berharga! 🥰'",
+    "🐈: 'Meonggg! Jangan males workout ya, entar kalah kuat sama aku! 💪'",
+    "🥛: 'Udah minum air putih belum? Inget, paw-ku siap nge-lock hari esok! 🐾'",
+    "✨: 'Kata Rizky: Kurangi rokoknya ya manis, aku mau kamu sehat terus nemenin aku.' ❤️",
+    "🐈: 'Nyam nyam.. Cia, kapan-kapan beliin aku snack premium di toko bawah ya! 🐟'",
+    "🎯: 'Target 45 kg udah makin deket nih. Rizky udah siap-siap dompetnya jebol buat jajanin kamu!'",
+    "🐈: 'Jangan lupa minum susu malam nanti! Kalau lupa, aku cakar yaaa, meong! 🥛'"
+];
+
+function mochiNgomong() {
+    // Mengambil omongan secara acak (random)
+    const acakIdx = Math.floor(Math.random() * bankOmonganMochi.length);
+    
+    // Memasukkan teks acak ke dalam boks quotes
+    document.getElementById('quote-text').innerText = bankOmonganMochi[acakIdx];
+    
+    // Efek animasi kecil biar boksnya kayak bergetar pas diklik
+    const box = document.querySelector('.quotes-box');
+    box.style.transform = 'scale(0.98)';
+    setTimeout(() => {
+        box.style.transform = 'scale(1)';
+    }, 100);
+}
+// ====================================================================
 </script> <div class="card">
     <h3>🛍️ Mochi & Cia's XP Shop</h3>
     <p style="font-size: 13px; color: #666;">Tukarkan XP kerja kerasmu dengan hadiah nyata dari Rizky! 🥰</p>
