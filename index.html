@@ -528,12 +528,12 @@ function updateCat(){
     let mood = "Happy";
     let title = "Newbie";
 
-   if(level >= 3){
-    title = "Survivor";
-}
+    if(level >= 3){
+        title = "Survivor";
+    }
+
     if(level >= 5){
-    title = "Gainer";
-}
+        title = "Gainer";
         cat = "🐈";
         mood = "Growing";
     }
@@ -567,8 +567,8 @@ function updateCat(){
     ).innerText = mood;
 
     document.getElementById(
-"playerTitle"
-).innerText = title;
+    "playerTitle"
+    ).innerText = title;
 
 }
     function saveWeight(){
