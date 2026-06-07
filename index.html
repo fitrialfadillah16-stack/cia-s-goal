@@ -1076,6 +1076,51 @@ function prevDay(){
         initWaterTracker();
     }
 }
-</script>
+    // ==================== LOGIKA XP SHOP ====================
+function beliHadiah(namaHadiah, hargaXP) {
+    // 1. Cek apakah XP kamu cukup buat jajan
+    if (xp < hargaXP) {
+        alert("❌ Meonggg! XP kamu gak cukup, Cia! 🐾\n\nHarga " + namaHadiah + " itu " + hargaXP + " XP. Ayo selesaikan quest makanan dan minum air putih lagi biar XP-mu nambah!");
+        return;
+    }
+
+    // 2. Kalau cukup, konfirmasi dulu beneran mau beli gak
+    if (!confirm("Kamu yakin mau menukarkan " + hargaXP + " XP demi " + namaHadiah + "?")) {
+        return;
+    }
+
+    // 3. Potong XP dan simpan ke memori
+    xp = parseInt(xp) - hargaXP;
+    localStorage.setItem("xp", xp);
+
+    // 4. Update semua tampilan level dan stats agar sinkron
+    level = Math.floor(xp / 100) + 1;
+    document.getElementById("xp").innerText = xp;
+    document.getElementById("level").innerText = level;
+    document.getElementById("xpBar").style.width = Math.min((xp / 100) * 100, 100) + "%";
+    
+    updateCat();
+    updateAchievements();
+    updateStats();
+
+    // 5. ✅ KITA UBAH NOTIFIKASINYA JADI RIZKY DI SINI
+    if (namaHadiah.includes("Mochi")) {
+        alert("🎉 Nyam nyam! Sukses membeli " + namaHadiah + "! Mochi kenyang banget dan makin sayang sama Cia! 🐈❤");
+    } else {
+        alert("🎉 Keren! Sukses menukarkan XP dengan " + namaHadiah + "!\n\nSilakan screenshot layar ini dan kirim ke Rizky buat ditagih hadiahnya sekarang! 📑 Sponsoring actived!");
+    }
+}
+// ========================================================
+</script> <div class="card">
+    <h3>🛍️ Mochi & Cia's XP Shop</h3>
+    <p style="font-size: 13px; color: #666;">Tukarkan XP kerja kerasmu dengan hadiah nyata dari Rizky! 🥰</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+        <button onclick="beliHadiah('🍦 Es Krim Cup', 100)">🍦 Es Krim Cup <br><small>(100 XP)</small></button>
+        <button onclick="beliHadiah('🍲 Jajan Seblak', 200)">🍲 Jajan Seblak <br><small>(200 XP)</small></button>
+        <button onclick="beliHadiah('🎫 Voucher Dimanjain', 300)">🎫 Voucher Manja <br><small>(300 XP)</small></button>
+        <button onclick="beliHadiah('🐟 Makanan Premium Mochi', 150)">🐟 Snack Mochi <br><small>(150 XP)</small></button>
+    </div>
+</div>
 </body>
 </html>
