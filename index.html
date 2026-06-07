@@ -732,258 +732,87 @@ function resetProgress(){
     history.join("<br>");
 
 }
-    const days = {
+   // ==================== BANK DATA MAKANAN & WORKOUT (BARU) ====================
+const bankSarapan = [
+    ["Nasi Putih", "Telur Dadar 2 Butir", "Susu Full Cream"],
+    ["Roti Bakar Keju", "Telur Mata Sapi", "Susu Full Cream"],
+    ["Oatmeal Instan", "Pisang & Selai Kacang", "Susu Full Cream"],
+    ["Bubur Ayam Komplit", "Telur Rebus", "Teh Manis Hangat"],
+    ["Pancake Madu Keju", "Susu Full Cream"],
+    ["Nasi Uduk", "Ayam Goreng", "Tahu / Tempe"],
+    ["Sandwich Tuna Mayo", "Keju Slice", "Susu UHT"],
+    ["Mie Goreng Telur + Sayur", "Susu UHT"],
+    ["Makaroni Schotel", "Telur Dadar", "Jus Alpukat"],
+    ["Nasi Goreng Mentega", "Telur Ceplok", "Sosis"]
+];
 
-1: `
-<h3>📅 Hari 1</h3>
+const bankSnackPagi = ["Roti Coklat 2 Lembar", "Biskuit Gandum", "Roti Selai Kacang", "Wafer Cokelat", "Roti Bakar", "Camilan Gurih", "Roti Maryam SKM", "Jasuke Manis", "Bakwan Jagung", "Dimsum Ayam"];
+const bankSnackSore = ["Pisang 2 Buah & Susu UHT", "Pisang Bakar Keju", "Alpukat Kocok", "Bubur Kacang Hijau", "Salad Buah Keju", "Kolak Pisang", "Singkong Thailand", "Es Krim Cup", "Pisang Goreng", "Susu UHT & Biskuit"];
+
+const bankMakanSiang = [
+    ["Nasi", "Ayam Goreng Lengkuas", "Tempe Bacem"],
+    ["Spaghetti Bolognese", "Daging Cincang", "Keju Parut"],
+    ["Nasi", "Daging Sapi Lada Hitam", "Tahu Goreng"],
+    ["Nasi", "Ikan Bakar Padang", "Daun Singkong"],
+    ["Nasi", "Ayam Geprek Mozzarella", "Telur"],
+    ["Nasi", "Sop Buntut / Iga", "Kentang Wortel"],
+    ["Nasi", "Sate Ayam Madura", "Bumbu Kacang Thick"],
+    ["Nasi", "Ayam Bakar Madu", "Perkedel Kentang"],
+    ["Nasi", "Cah Daging Brokoli", "Telur Dadar"],
+    ["Nasi", "Chicken Katsu", "Saos Teriyaki"]
+];
+
+const bankWorkout = [
+    ["Squat x10", "Wall Push Up x10", "Glute Bridge x10", "Calf Raise x15", "Plank 15 Detik"],
+    ["Squat x10", "Wall Push Up x10", "Plank 15 Detik"],
+    ["Squat x12", "Wall Push Up x12", "Glute Bridge x12"],
+    ["Squat x12", "Wall Push Up x12", "Plank 20 Detik"],
+    ["Jalan Santai 20 Menit", "Stretching Ringan"],
+    ["Stretching 15 Menit", "Yoga Santai"]
+];
+
+// GENERATOR OTOMATIS 30 HARI (MENGGANTIKAN CONST DAYS LAMA)
+const days = {};
+
+for (let i = 1; i <= 30; i++) {
+    const idx10 = (i - 1) % 10; 
+    const idx6  = (i - 1) % 6;
+    const targetRokok = Math.max(10, 15 - Math.floor((i - 1) / 5));
+
+    let sarapanHTML = bankSarapan[idx10].map(item => `<input type="checkbox"> ${item}<br>`).join('');
+    let siangHTML = bankMakanSiang[idx10].map(item => `<input type="checkbox"> ${item}<br>`).join('');
+    let malamHTML = bankMakanSiang[(idx10 + 3) % 10].map(item => `<input type="checkbox"> ${item}<br>`).join(''); 
+    let workoutHTML = bankWorkout[idx6].map(item => `<input type="checkbox"> ${item}<br>`).join('');
+
+    days[i] = `
+<h3>📅 Hari ${i}</h3>
 
 <p><b>🍳 08.00 Sarapan</b></p>
-<input type="checkbox"> Nasi Putih<br>
-<input type="checkbox"> Telur Dadar 2 Butir<br>
-<input type="checkbox"> Susu Full Cream<br><br>
+${sarapanHTML}<br>
 
 <p><b>🍞 11.00 Snack Pagi</b></p>
-<input type="checkbox"> Roti Coklat 2 Lembar<br><br>
+<input type="checkbox"> ${bankSnackPagi[idx10]}<br><br>
 
 <p><b>🍗 13.00 Makan Siang</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Ayam Goreng<br>
-<input type="checkbox"> Tempe<br><br>
+${siangHTML}<br>
 
 <p><b>🍌 16.00 Snack Sore</b></p>
-<input type="checkbox"> Pisang 2 Buah<br>
-<input type="checkbox"> Susu UHT<br><br>
+<input type="checkbox"> ${bankSnackSore[idx10]}<br><br>
 
 <p><b>💪 18.30 Workout</b></p>
-<input type="checkbox"> Squat x10<br>
-<input type="checkbox"> Wall Push Up x10<br>
-<input type="checkbox"> Glute Bridge x10<br>
-<input type="checkbox"> Calf Raise x15<br>
-<input type="checkbox"> Plank 15 Detik<br><br>
+${workoutHTML}<br>
 
 <p><b>🌙 19.30 Makan Malam</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Telur Ceplok 2<br>
-<input type="checkbox"> Tempe<br><br>
+${malamHTML}<br>
 
 <p><b>🥛 22.00 Sebelum Tidur</b></p>
 <input type="checkbox"> Susu Full Cream<br><br>
 
 <p><b>🚬 Target Rokok</b></p>
-<input type="checkbox"> Maksimal 15 Batang
-`,
-
-2: `
-<h3>📅 Hari 2</h3>
-
-<p><b>🍳 08.00 Sarapan</b></p>
-<input type="checkbox"> Nasi Uduk<br>
-<input type="checkbox"> Telur Rebus 2<br>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🍞 11.00 Snack Pagi</b></p>
-<input type="checkbox"> Biskuit Gandum<br><br>
-
-<p><b>🍗 13.00 Makan Siang</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Ayam<br>
-<input type="checkbox"> Tahu<br><br>
-
-<p><b>🍌 16.00 Snack Sore</b></p>
-<input type="checkbox"> Pisang<br>
-<input type="checkbox"> Susu UHT<br><br>
-
-<p><b>💪 18.30 Workout</b></p>
-<input type="checkbox"> Squat x10<br>
-<input type="checkbox"> Wall Push Up x10<br>
-<input type="checkbox"> Plank 15 Detik<br><br>
-
-<p><b>🌙 19.30 Makan Malam</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Ikan<br>
-<input type="checkbox"> Tempe<br><br>
-
-<p><b>🥛 22.00 Sebelum Tidur</b></p>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🚬 Target Rokok</b></p>
-<input type="checkbox"> Maksimal 15 Batang
-`,
-
-3: `
-<h3>📅 Hari 3</h3>
-
-<p><b>🍳 08.00 Sarapan</b></p>
-<input type="checkbox"> Bubur Ayam<br>
-<input type="checkbox"> Telur Rebus<br>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🍞 11.00 Snack Pagi</b></p>
-<input type="checkbox"> Roti Selai Kacang<br><br>
-
-<p><b>🍗 13.00 Makan Siang</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Ayam<br>
-<input type="checkbox"> Tempe<br><br>
-
-<p><b>🍌 16.00 Snack Sore</b></p>
-<input type="checkbox"> Pisang 2 Buah<br><br>
-
-<p><b>💪 18.30 Workout</b></p>
-<input type="checkbox"> Squat x10<br>
-<input type="checkbox"> Wall Push Up x10<br>
-<input type="checkbox"> Glute Bridge x10<br><br>
-
-<p><b>🌙 19.30 Makan Malam</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Telur<br>
-<input type="checkbox"> Tempe<br><br>
-
-<p><b>🥛 22.00 Sebelum Tidur</b></p>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🚬 Target Rokok</b></p>
-<input type="checkbox"> Maksimal 14 Batang
-`,
-
-4: `
-<h3>📅 Hari 4</h3>
-
-<p><b>🍳 08.00 Sarapan</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Omelet 2 Telur<br>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🍞 11.00 Snack Pagi</b></p>
-<input type="checkbox"> Wafer<br><br>
-
-<p><b>🍗 13.00 Makan Siang</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Ayam<br>
-<input type="checkbox"> Tempe<br><br>
-
-<p><b>🍌 16.00 Snack Sore</b></p>
-<input type="checkbox"> Pisang<br>
-<input type="checkbox"> Susu UHT<br><br>
-
-<p><b>💪 18.30 Workout</b></p>
-<input type="checkbox"> Squat x12<br>
-<input type="checkbox"> Wall Push Up x12<br>
-<input type="checkbox"> Plank 20 Detik<br><br>
-
-<p><b>🌙 19.30 Makan Malam</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Telur<br>
-<input type="checkbox"> Tempe<br><br>
-
-<p><b>🥛 22.00 Sebelum Tidur</b></p>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🚬 Target Rokok</b></p>
-<input type="checkbox"> Maksimal 14 Batang
-`,
-
-5: `
-<h3>📅 Hari 5</h3>
-
-<p><b>🍳 08.00 Sarapan</b></p>
-<input type="checkbox"> Nasi Goreng Telur<br>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🍞 11.00 Snack Pagi</b></p>
-<input type="checkbox"> Roti Coklat<br><br>
-
-<p><b>🍗 13.00 Makan Siang</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Ayam<br>
-<input type="checkbox"> Tahu<br><br>
-
-<p><b>🍌 16.00 Snack Sore</b></p>
-<input type="checkbox"> Pisang<br><br>
-
-<p><b>💪 18.30 Workout</b></p>
-<input type="checkbox"> Squat x12<br>
-<input type="checkbox"> Wall Push Up x12<br>
-<input type="checkbox"> Glute Bridge x12<br><br>
-
-<p><b>🌙 19.30 Makan Malam</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Telur<br>
-<input type="checkbox"> Tempe<br><br>
-
-<p><b>🥛 22.00 Sebelum Tidur</b></p>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🚬 Target Rokok</b></p>
-<input type="checkbox"> Maksimal 14 Batang
-`,
-
-6: `
-<h3>📅 Hari 6</h3>
-
-<p><b>🍳 08.00 Sarapan</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Telur Rebus 2<br>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🍞 11.00 Snack Pagi</b></p>
-<input type="checkbox"> Biskuit<br><br>
-
-<p><b>🍗 13.00 Makan Siang</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Ayam<br>
-<input type="checkbox"> Tempe<br><br>
-
-<p><b>🍌 16.00 Snack Sore</b></p>
-<input type="checkbox"> Pisang 2 Buah<br><br>
-
-<p><b>💪 18.30 Workout</b></p>
-<input type="checkbox"> Jalan Santai 20 Menit<br><br>
-
-<p><b>🌙 19.30 Makan Malam</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Ikan<br>
-<input type="checkbox"> Tempe<br><br>
-
-<p><b>🥛 22.00 Sebelum Tidur</b></p>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🚬 Target Rokok</b></p>
-<input type="checkbox"> Maksimal 13 Batang
-`,
-
-7: `
-<h3>📅 Hari 7</h3>
-
-<p><b>🍳 08.00 Sarapan</b></p>
-<input type="checkbox"> Menu Bebas + Protein<br>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🍞 11.00 Snack Pagi</b></p>
-<input type="checkbox"> Snack Favorit<br><br>
-
-<p><b>🍗 13.00 Makan Siang</b></p>
-<input type="checkbox"> Makan Besar<br><br>
-
-<p><b>🍌 16.00 Snack Sore</b></p>
-<input type="checkbox"> Pisang<br><br>
-
-<p><b>💪 18.30 Workout</b></p>
-<input type="checkbox"> Stretching 15 Menit<br><br>
-
-<p><b>🌙 19.30 Makan Malam</b></p>
-<input type="checkbox"> Nasi<br>
-<input type="checkbox"> Telur<br>
-<input type="checkbox"> Tempe<br><br>
-
-<p><b>🥛 22.00 Sebelum Tidur</b></p>
-<input type="checkbox"> Susu Full Cream<br><br>
-
-<p><b>🚬 Target Rokok</b></p>
-<input type="checkbox"> Maksimal 13 Batang
-`
-
-};
+<input type="checkbox"> Maksimal ${targetRokok} Batang
+`;
+}
+// ============================================================================
     function loadDay(){
 
     document.getElementById(
