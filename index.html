@@ -297,6 +297,13 @@ Newbie
     Week:
     <span id="statsWeek">1</span>
 </p>
+        <h3>📈 Riwayat Berat</h3>
+
+<div id="weightHistory">
+
+Belum ada data
+
+</div>
         <p>
 🔥 Streak:
 <span id="statsStreak">0</span>
@@ -334,6 +341,7 @@ document.getElementById("xp").innerText = xp;document.getElementById("level").in
 updateWeight();
 updateAchievements();
 updateStats();
+updateWeightHistory();
 document.getElementById("xpBar").style.width =
 Math.min((xp / 100) * 100, 100) + "%";
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -584,10 +592,23 @@ function updateCat(){
     "weight",
     weight
     );
+        let history = JSON.parse(
+localStorage.getItem(
+"weightHistory"
+)
+) || [];
 
-    updateWeight();
+history.push(weight);
+
+localStorage.setItem(
+"weightHistory",
+JSON.stringify(history)
+);
+
+   updateWeight();
 updateAchievements();
 updateStats();
+updateWeightHistory();
 
 }
 
@@ -685,6 +706,30 @@ function resetProgress(){
     "Streak: " + streak;
 
     alert(data);
+
+}
+    function updateWeightHistory(){
+
+    let history = JSON.parse(
+    localStorage.getItem(
+    "weightHistory"
+    )
+    ) || [];
+
+    if(history.length === 0){
+
+        document.getElementById(
+        "weightHistory"
+        ).innerHTML =
+        "Belum ada data";
+
+        return;
+    }
+
+    document.getElementById(
+    "weightHistory"
+    ).innerHTML =
+    history.join("<br>");
 
 }
     const days = {
