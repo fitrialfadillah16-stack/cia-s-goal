@@ -125,11 +125,15 @@ Simpan
 </div>
 
 <div class="card">
+
     <h2>🏆 Achievement</h2>
 
-    <p>🔒 Breakfast Warrior</p>
-    <p>🔒 First 1 Kg</p>
-    <p>🔒 Smoke Reducer</p>
+    <div id="achievementList">
+
+        🥚 Belum ada achievement
+
+    </div>
+
 </div>
 <script>
 
@@ -145,7 +149,8 @@ document.getElementById("xp").innerText = xp;document.getElementById("level").in
     document.getElementById("dayTitle").innerText =
 "📅 Day " + currentDay + " of 30";
     updateCat();
-    updateWeight();
+updateWeight();
+updateAchievements();
 document.getElementById("xpBar").style.width =
 Math.min((xp / 100) * 100, 100) + "%";
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -188,6 +193,51 @@ Math.min((xp / 100) * 100, 100) + "%";
     });
 
 });
+    function updateAchievements(){
+
+    let achievements = [];
+
+    if(xp >= 100){
+        achievements.push(
+        "🏆 Level 2 Reached"
+        );
+    }
+
+    if(xp >= 300){
+        achievements.push(
+        "🏆 Level 4 Reached"
+        );
+    }
+
+    if(weight >= 38){
+        achievements.push(
+        "🏆 +1KG Club"
+        );
+    }
+
+    if(weight >= 40){
+        achievements.push(
+        "🏆 40KG Reached"
+        );
+    }
+
+    if(weight >= 45){
+        achievements.push(
+        "🏆 Goal Completed"
+        );
+    }
+
+    if(achievements.length === 0){
+        achievements.push(
+        "🥚 Belum ada achievement"
+        );
+    }
+
+    document.getElementById(
+    "achievementList"
+    ).innerHTML =
+    achievements.join("<br>");
+}
 function updateCat(){
 
     let cat = "🐱";
@@ -222,6 +272,7 @@ function updateCat(){
     );
 
     updateWeight();
+updateAchievements();
 
 }
 
@@ -609,6 +660,7 @@ function resetProgress(){
             ) + "%";
 
             updateCat();
+            updateAchievements();
 
         });
 
