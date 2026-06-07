@@ -619,103 +619,7 @@ updateChart();
 
 }
 
-function updateWeight(){
-
-    document.getElementById(
-    "currentWeight"
-    ).innerText = weight;
-
-   let startWeight = 37;
-let targetWeight = 45;
-
-let percent =
-Math.round(
-((weight - startWeight) /
-(targetWeight - startWeight))
-* 100
-);
-
-if(percent < 0){
-    percent = 0;
-}
-
-if(percent > 100){
-    percent = 100;
-}
-
-    document.getElementById(
-    "progressPercent"
-    ).innerText = percent;
-    document.getElementById(
-"weightBar"
-).style.width =
-percent + "%";
-
-}
-    function undoXP(){
-
-    xp = parseInt(xp) - lastAction;
-
-    if(xp < 0){
-        xp = 0;
-    }
-
-    localStorage.setItem("xp", xp);
-
-    level = Math.floor(xp / 100) + 1;
-
-    document.getElementById("xp").innerText = xp;
-
-    document.getElementById("level").innerText = level;
-
-    document.getElementById("xpBar").style.width =
-    Math.min((xp / 100) * 100, 100) + "%";
-
-    updateCat();
-
-}
-
-function resetProgress(){
-
-    if(!confirm(
-        "Yakin mau reset semua progress?"
-    )){
-        return;
-    }
-
-    localStorage.clear();
-
-    location.reload();
-
-}
-    function addStreak(){
-
-    streak++;
-
-    localStorage.setItem(
-    "streak",
-    streak
-    );
-
-    updateStats();
-
-    updateAchievements();
-
-}
-    function exportData(){
-
-    let data =
-
-    "XP: " + xp + "\n" +
-    "Level: " + level + "\n" +
-    "Weight: " + weight + "\n" +
-    "Day: " + currentDay + "\n" +
-    "Streak: " + streak;
-
-    alert(data);
-
-}
-    function updateWeightHistory(){
+function updateWeightHistory(){
 
     let history = JSON.parse(
     localStorage.getItem(
@@ -732,6 +636,59 @@ function resetProgress(){
 
         return;
     }
+
+    document.getElementById(
+    "weightHistory"
+    ).innerHTML =
+    history.join("<br>");
+
+}
+
+function updateChart(){
+
+    let history = JSON.parse(
+    localStorage.getItem(
+    "weightHistory"
+    )
+    ) || [];
+
+    if(history.length === 0){
+
+        document.getElementById(
+        "weightChart"
+        ).innerText =
+        "Belum ada grafik";
+
+        return;
+    }
+
+    let chart = "";
+
+    history.forEach(weight => {
+
+        let dots =
+        "●".repeat(
+        Math.max(
+        1,
+        Math.round(
+        (weight - 36) * 2
+        )
+        )
+        );
+
+        chart +=
+        weight +
+        "kg " +
+        dots +
+        "\n";
+
+    });
+
+    document.getElementById(
+    "weightChart"
+    ).innerText = chart;
+
+}
         function updateChart(){
 
     let history = JSON.parse(
