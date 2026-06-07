@@ -278,6 +278,19 @@ weight >= 45 ?
 "✅ 🎯 Goal Crusher" :
 "🔒 🎯 Goal Crusher"
 );
+        document.getElementById(
+"achievementList"
+).innerHTML =
+achievements.join("<br>");
+
+document.getElementById(
+"statsAchievement"
+).innerText =
+achievements.filter(
+a => a.startsWith("✅")
+).length;
+
+}
         
 function updateCat(){
 
