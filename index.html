@@ -263,6 +263,12 @@ Simpan
             Happy
         </span>
     </p>
+        <p>
+Title:
+<span id="playerTitle">
+Newbie
+</span>
+</p>
 
 </div>
     <div class="card">
@@ -520,18 +526,26 @@ function updateCat(){
 
     let cat = "🐱";
     let mood = "Happy";
+    let title = "Newbie";
 
+   if(level >= 3){
+    title = "Survivor";
+}
     if(level >= 5){
+    title = "Gainer";
+}
         cat = "🐈";
         mood = "Growing";
     }
 
     if(level >= 10){
+        title = "Beast Mode";
         cat = "😺";
         mood = "Strong";
     }
 
     if(level >= 15){
+        title = "Queen of Bulk";
         cat = "😸";
         mood = "Elite";
     }
@@ -551,6 +565,10 @@ function updateCat(){
     document.getElementById(
     "petMood"
     ).innerText = mood;
+
+    document.getElementById(
+"playerTitle"
+).innerText = title;
 
 }
     function saveWeight(){
