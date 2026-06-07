@@ -689,48 +689,6 @@ function updateChart(){
     ).innerText = chart;
 
 }
-        function updateChart(){
-
-    let history = JSON.parse(
-    localStorage.getItem(
-    "weightHistory"
-    )
-    ) || [];
-
-    if(history.length === 0){
-
-        document.getElementById(
-        "weightChart"
-        ).innerText =
-        "Belum ada grafik";
-
-        return;
-    }
-
-    let chart = "";
-
-    history.forEach(weight => {
-
-        let dots =
-        "●".repeat(
-        Math.round(
-        (weight - 36) * 2
-        )
-        );
-
-        chart +=
-        weight +
-        "kg " +
-        dots +
-        "\n";
-
-    });
-
-    document.getElementById(
-    "weightChart"
-    ).innerText = chart;
-
-}
 
     const days = {
 
