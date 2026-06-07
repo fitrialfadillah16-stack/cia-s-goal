@@ -1121,6 +1121,9 @@ const bankOmonganMochi = [
 ];
 
 function mochiNgomong() {
+    // 🔊 Baris audio di bawah ini yang bikin si Mochi beneran bunyi meong asli!
+    new Audio("https://actions.google.com/sounds/v1/animals/cat_purr_meow.ogg").play().catch(e => console.log("Audio play blocked"));
+
     const acakIdx = Math.floor(Math.random() * bankOmonganMochi.length);
     const quoteText = document.getElementById('quote-text');
     if (quoteText) {
