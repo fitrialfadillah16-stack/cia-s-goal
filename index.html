@@ -143,6 +143,10 @@ Simpan
         Berat:
         <span id="statsWeight">37</span> kg
     </p>
+        <p>
+    Achievement:
+    <span id="statsAchievement">0</span>
+</p>
 
 </div>
 
@@ -232,6 +236,29 @@ Math.min((xp / 100) * 100, 100) + "%";
     function updateAchievements(){
 
     let achievements = [];
+        if(currentDay >= 1){
+    achievements.push(
+    "🥚 Awal Perjuangan"
+    );
+}
+
+if(level >= 2){
+    achievements.push(
+    "🍳 Breakfast Warrior"
+    );
+}
+
+if(level >= 3){
+    achievements.push(
+    "💪 Workout Rookie"
+    );
+}
+
+if(level >= 5){
+    achievements.push(
+    "🐱 Cat Trainer"
+    );
+}
 
     if(xp >= 100){
         achievements.push(
@@ -246,6 +273,11 @@ Math.min((xp / 100) * 100, 100) + "%";
     }
 
     if(weight >= 38){
+        if(weight >= 39){
+    achievements.push(
+    "🥛 Milk Addict"
+    );
+}
         achievements.push(
         "🏆 +1KG Club"
         );
@@ -270,9 +302,14 @@ Math.min((xp / 100) * 100, 100) + "%";
     }
 
     document.getElementById(
-    "achievementList"
-    ).innerHTML =
-    achievements.join("<br>");
+"achievementList"
+).innerHTML =
+achievements.join("<br>");
+
+document.getElementById(
+"statsAchievement"
+).innerText =
+achievements.length;
 }
 function updateCat(){
 
