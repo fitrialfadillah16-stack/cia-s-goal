@@ -278,23 +278,7 @@ weight >= 45 ?
 "✅ 🎯 Goal Crusher" :
 "🔒 🎯 Goal Crusher"
 );
-        if(currentDay >= 1){
-    achievements.push(
-    "🥚 Awal Perjuangan"
-    );
-}
-    document.getElementById(
-"achievementList"
-).innerHTML =
-achievements.join("<br>");
-
-document.getElementById(
-"statsAchievement"
-).innerText =
-achievements.filter(
-a => a.startsWith("✅")
-).length;
-}
+        
 function updateCat(){
 
     let cat = "🐱";
