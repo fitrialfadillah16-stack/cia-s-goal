@@ -1072,28 +1072,25 @@ function prevDay(){
         document.getElementById("dayTitle").innerText = "📅 Day " + currentDay + " of 30";
         loadDay();
         // --- Tambahan agar air & quotes ganti hari ---
-        updateQuote(currentDay);
+       updateQuote(currentDay);
         initWaterTracker();
     }
-}
-    // ==================== LOGIKA XP SHOP ====================
+} // <--- Batas akhir fungsi bawaan kamu yang lama, biarkan dia menutup dengan aman.
+
+// ==================== LOGIKA XP SHOP ====================
 function beliHadiah(namaHadiah, hargaXP) {
-    // 1. Cek apakah XP kamu cukup buat jajan
     if (xp < hargaXP) {
         alert("❌ Meonggg! XP kamu gak cukup, Cia! 🐾\n\nHarga " + namaHadiah + " itu " + hargaXP + " XP. Ayo selesaikan quest makanan dan minum air putih lagi biar XP-mu nambah!");
         return;
     }
 
-    // 2. Kalau cukup, konfirmasi dulu beneran mau beli gak
     if (!confirm("Kamu yakin mau menukarkan " + hargaXP + " XP demi " + namaHadiah + "?")) {
         return;
     }
 
-    // 3. Potong XP dan simpan ke memori
     xp = parseInt(xp) - hargaXP;
     localStorage.setItem("xp", xp);
 
-    // 4. Update semua tampilan level dan stats agar sinkron
     level = Math.floor(xp / 100) + 1;
     document.getElementById("xp").innerText = xp;
     document.getElementById("level").innerText = level;
@@ -1103,7 +1100,6 @@ function beliHadiah(namaHadiah, hargaXP) {
     updateAchievements();
     updateStats();
 
-    // 5. ✅ KITA UBAH NOTIFIKASINYA JADI RIZKY DI SINI
     if (namaHadiah.includes("Mochi")) {
         alert("🎉 Nyam nyam! Sukses membeli " + namaHadiah + "! Mochi kenyang banget dan makin sayang sama Cia! 🐈❤");
     } else {
@@ -1111,6 +1107,7 @@ function beliHadiah(namaHadiah, hargaXP) {
     }
 }
 // ========================================================
+
 // ==================== LOGIKA RANDOM SPEECH MOCHI ====================
 const bankOmonganMochi = [
     "🐈: 'Cia, hari ini udah dapet berapa XP? Buruan tuker seblak biar Rizky pusing! 🍲'",
@@ -1124,21 +1121,25 @@ const bankOmonganMochi = [
 ];
 
 function mochiNgomong() {
-    // Mengambil omongan secara acak (random)
     const acakIdx = Math.floor(Math.random() * bankOmonganMochi.length);
+    const quoteText = document.getElementById('quote-text');
+    if (quoteText) {
+        quoteText.innerText = bankOmonganMochi[acakIdx];
+    } else {
+        alert(bankOmonganMochi[acakIdx]);
+    }
     
-    // Memasukkan teks acak ke dalam boks quotes
-    document.getElementById('quote-text').innerText = bankOmonganMochi[acakIdx];
-    
-    // Efek animasi kecil biar boksnya kayak bergetar pas diklik
     const box = document.querySelector('.quotes-box');
-    box.style.transform = 'scale(0.98)';
-    setTimeout(() => {
-        box.style.transform = 'scale(1)';
-    }, 100);
+    if (box) {
+        box.style.transform = 'scale(0.98)';
+        setTimeout(() => { box.style.transform = 'scale(1)'; }, 100);
+    }
 }
 // ====================================================================
-</script> <div class="card">
+
+</script>
+
+<div class="card">
     <h3>🛍️ Mochi & Cia's XP Shop</h3>
     <p style="font-size: 13px; color: #666;">Tukarkan XP kerja kerasmu dengan hadiah nyata dari Rizky! 🥰</p>
     
@@ -1149,5 +1150,14 @@ function mochiNgomong() {
         <button onclick="beliHadiah('🐟 Makanan Premium Mochi', 150)">🐟 Snack Mochi <br><small>(150 XP)</small></button>
     </div>
 </div>
+
+<div class="card" style="text-align: center;">
+    <h2>🐱 Companion</h2>
+    <p id="petFace" onclick="mochiNgomong()" style="font-size: 60px; cursor: pointer; display: inline-block; margin: 10px 0;">
+        🐱
+    </p>
+    <p style="font-size: 11px; color: #888;">(Klik si Mochi biar dia ngomong sesuatu! 👆)</p>
+</div>
+
 </body>
 </html>
