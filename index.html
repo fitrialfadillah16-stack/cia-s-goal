@@ -1045,11 +1045,21 @@ updateStats();
     
     function nextDay(){
     if(currentDay < 30){
+        // 1. Cek dulu berapa gelas yang sudah diminum hari ini
+        let airHariIni = parseInt(localStorage.getItem("water_day_" + currentDay)) || 0;
+
+        // 2. Kalau belum minum minimal 6 gelas, Mochi bakal ngasih peringatan!
+        if (airHariIni < 6) {
+            alert("🛑 Meonggg! Mochi gak mau pindah hari! 🐾\n\nKamu baru minum " + airHariIni + " gelas hari ini. Minimal minum 6 gelas dulu baru Mochi bolehin lanjut ke hari berikutnya! Ayo minum air putih dulu, Cia! 🥛");
+            return; // Kodenya stop di sini, gak jadi ganti hari!
+        }
+
+        // 3. Kalau lolos (udah minum >= 6 gelas), baru boleh lanjut!
         currentDay++;
         localStorage.setItem("currentDay", currentDay);
         document.getElementById("dayTitle").innerText = "📅 Day " + currentDay + " of 30";
         loadDay();
-        // --- Tambahan agar air & quotes ganti hari ---
+        
         updateQuote(currentDay);
         initWaterTracker();
     }
