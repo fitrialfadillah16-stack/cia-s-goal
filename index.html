@@ -250,6 +250,11 @@ button:hover{
     <button onclick="saveJournal()" style="margin-top: 10px;">Simpan Catatan</button>
 </div>
     <div class="card">
+    <h2>📜 Riwayat Diary</h2>
+    <div id="journalHistory" style="max-height: 200px; overflow-y: auto;">
+        </div>
+</div>
+    <div class="card">
         <h2>⚖️ Weight Tracker</h2>
 <input
 id="weightInput"
@@ -1211,35 +1216,48 @@ function updateMoodMochi() {
         petFace.innerText = isHaid ? "🥺" : "🐱";
     }
 }
-// Fungsi untuk menyimpan catatan
+// 1. TAMBAHKAN DUA FUNGSI INI DI ATAS 'window.onload'
 function saveJournal() {
     const journalText = document.getElementById("dailyJournal").value;
-    const today = new Date().toDateString();
-    localStorage.setItem("journal_" + today, journalText);
+    const dateKey = new Date().toDateString();
+    localStorage.setItem("journal_" + dateKey, journalText);
     alert("Catatan tersimpan! Semangat terus ya Cia! 🐈");
+    loadJournalHistory(); 
 }
 
-// Fungsi untuk memuat catatan
-function loadJournal() {
-    const today = new Date().toDateString();
-    const savedNote = localStorage.getItem("journal_" + today);
-    if (savedNote) {
-        document.getElementById("dailyJournal").value = savedNote;
+function loadJournalHistory() {
+    const historyContainer = document.getElementById("journalHistory");
+    if (!historyContainer) return; 
+    
+    historyContainer.innerHTML = "";
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith("journal_")) {
+            const date = key.replace("journal_", "");
+            const note = localStorage.getItem(key);
+            historyContainer.innerHTML += `
+                <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 8px; background: #fafafa;">
+                    <strong style="color: #d2691e;">📅 ${date}</strong>
+                    <p style="margin: 5px 0 0 0;">${note}</p>
+                </div>
+            `;
+        }
     }
 }
-// Tambahkan ini agar saat refresh, status Mochi tidak hilang
+
+// 2. INI 'window.onload' KAMU YANG LAMA (JANGAN DIHAPUS, CUMA DITAMBAH)
 window.onload = function() {
     const isHaid = localStorage.getItem("modeHaid") === "true";
     const el = document.getElementById("modeHaid");
     if (el) el.checked = isHaid;
     updateMoodMochi();
     
-    // Pastikan fungsi lama kamu tetap jalan
     if (typeof initWaterTracker === "function") initWaterTracker();
-    checkAutomaticStreak(); // Tambahkan ini di paling bawah agar otomatis jalan
+    checkAutomaticStreak(); 
+    
+    // TAMBAHKAN BARIS INI SAJA DI DALAMNYA:
+    loadJournalHistory(); 
 };
-// ==============================================================================
-
 </script>
 
 <div class="card">
