@@ -244,7 +244,11 @@ button:hover{
     <div class="card" style="text-align: center; background: #fffaf0; border: 1px solid #ffd700; margin-bottom: 20px;">
         <h3 id="streakDisplay" style="color: #d2691e; margin: 5px 0;">🔥 Streak: 0 Hari</h3>
     </div>
-
+<div class="card">
+    <h2>📝 Catatan Harian</h2>
+    <textarea id="dailyJournal" placeholder="Apa perasaanmu hari ini?..." style="width: 100%; height: 80px; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"></textarea>
+    <button onclick="saveJournal()" style="margin-top: 10px;">Simpan Catatan</button>
+</div>
     <div class="card">
         <h2>⚖️ Weight Tracker</h2>
 <input
@@ -1207,7 +1211,22 @@ function updateMoodMochi() {
         petFace.innerText = isHaid ? "🥺" : "🐱";
     }
 }
+// Fungsi untuk menyimpan catatan
+function saveJournal() {
+    const journalText = document.getElementById("dailyJournal").value;
+    const today = new Date().toDateString();
+    localStorage.setItem("journal_" + today, journalText);
+    alert("Catatan tersimpan! Semangat terus ya Cia! 🐈");
+}
 
+// Fungsi untuk memuat catatan
+function loadJournal() {
+    const today = new Date().toDateString();
+    const savedNote = localStorage.getItem("journal_" + today);
+    if (savedNote) {
+        document.getElementById("dailyJournal").value = savedNote;
+    }
+}
 // Tambahkan ini agar saat refresh, status Mochi tidak hilang
 window.onload = function() {
     const isHaid = localStorage.getItem("modeHaid") === "true";
