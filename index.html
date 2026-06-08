@@ -241,9 +241,12 @@ button:hover{
         </label>
     </div>
 
+    <div class="card" style="text-align: center; background: #fffaf0; border: 1px solid #ffd700; margin-bottom: 20px;">
+        <h3 id="streakDisplay" style="color: #d2691e; margin: 5px 0;">🔥 Streak: 0 Hari</h3>
+    </div>
+
     <div class="card">
         <h2>⚖️ Weight Tracker</h2>
-
 <input
 id="weightInput"
 type="number"
@@ -410,7 +413,26 @@ localStorage.getItem("weight") || 37;
 parseInt(
 localStorage.getItem("streak")
 ) || 0;
+// TAMBAHAN FITUR STREAK
+function checkAutomaticStreak() {
+    const today = new Date().toDateString();
+    const lastActive = localStorage.getItem("lastActiveDate");
+    let currentStreak = parseInt(localStorage.getItem("streak")) || 0;
 
+    if (lastActive !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (lastActive === yesterday.toDateString()) {
+            currentStreak += 1;
+        } else {
+            currentStreak = 1;
+        }
+        localStorage.setItem("streak", currentStreak);
+        localStorage.setItem("lastActiveDate", today);
+    }
+    const streakEl = document.getElementById("streakDisplay");
+    if (streakEl) streakEl.innerText = "🔥 Streak: " + currentStreak + " Hari";
+}
 document.getElementById("xp").innerText = xp;document.getElementById("level").innerText = level;
     document.getElementById("dayTitle").innerText =
 "📅 Day " + currentDay + " of 30";
@@ -1195,6 +1217,7 @@ window.onload = function() {
     
     // Pastikan fungsi lama kamu tetap jalan
     if (typeof initWaterTracker === "function") initWaterTracker();
+    checkAutomaticStreak(); // Tambahkan ini di paling bawah agar otomatis jalan
 };
 // ==============================================================================
 
