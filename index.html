@@ -1181,7 +1181,8 @@ window.onload = function() {
     // Pastikan fungsi lama kamu tetap jalan
     if (typeof initWaterTracker === "function") initWaterTracker();
     checkAutomaticStreak(); // Tambahkan ini di paling bawah agar otomatis jalan
-    // Fungsi simpan catatan harian
+   <script>
+// 1. Fungsi Catatan Harian (Ditaruh di luar, biar bisa dipanggil kapan saja)
 function saveJournal() {
     const journalText = document.getElementById("dailyJournal").value;
     const today = new Date().toDateString();
@@ -1189,7 +1190,6 @@ function saveJournal() {
     alert("Catatan tersimpan! Semangat terus ya Cia! 🐈");
 }
 
-// Fungsi untuk memuat catatan saat aplikasi dibuka
 function loadJournal() {
     const today = new Date().toDateString();
     const savedNote = localStorage.getItem("journal_" + today);
@@ -1198,11 +1198,20 @@ function loadJournal() {
     }
 }
 
-// Panggil loadJournal saat aplikasi dibuka agar catatannya muncul kembali
-loadJournal();
+// 2. Fungsi Inisialisasi saat halaman pertama kali dibuka
+window.onload = function() {
+    // Mode Haid
+    const isHaid = localStorage.getItem("modeHaid") === "true";
+    const el = document.getElementById("modeHaid");
+    if (el) el.checked = isHaid;
+    
+    if (typeof updateMoodMochi === "function") updateMoodMochi();
+    if (typeof initWaterTracker === "function") initWaterTracker();
+    
+    // Fitur Baru
+    checkAutomaticStreak(); 
+    loadJournal(); // Panggil di sini agar otomatis muncul saat refresh
 };
-// ==============================================================================
-
 </script>
 
 <div class="card">
